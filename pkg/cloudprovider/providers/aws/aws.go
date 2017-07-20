@@ -184,8 +184,8 @@ func (c *Cloud) DescribeCluster(name string) error {
 	return ErrNotImplemented
 }
 
-// getKubeAPIURL returns a full Kubernetes API URL from an ELB stack.
-func (c Cloud) getKubeAPIURL(clusterName string) (string, error) {
+// GetKubeAPIURL returns a full Kubernetes API URL from an ELB stack.
+func (c Cloud) GetKubeAPIURL(clusterName string) (string, error) {
 	stack, err := c.getStack(makeELBStackName(clusterName))
 	if err != nil {
 		return "", err
@@ -205,7 +205,7 @@ func formatKubeAPIURL(host string) string {
 	return "https://" + strings.ToLower(host)
 }
 
-// getELBName returns an ELB name from the ELB stack for a given given cluster.
+// getELBName returns an ELB name from the ELB stack for a given cluster.
 func (c Cloud) getELBName(clusterName string) (string, error) {
 	res, err := c.getStackResources(makeELBStackName(clusterName))
 	if err != nil {
@@ -435,7 +435,7 @@ func (c *Cloud) CreateMasterPool(p model.MasterPool) error {
 		return err
 	}
 
-	kubeAPIURL, err := c.getKubeAPIURL(p.ClusterName)
+	kubeAPIURL, err := c.GetKubeAPIURL(p.ClusterName)
 	if err != nil {
 		return err
 	}
@@ -492,7 +492,7 @@ func (c *Cloud) CreateComputePool(p model.ComputePool) error {
 	if err != nil {
 		return err
 	}
-	kubeAPIURL, err := c.getKubeAPIURL(p.ClusterName)
+	kubeAPIURL, err := c.GetKubeAPIURL(p.ClusterName)
 	if err != nil {
 		return err
 	}
